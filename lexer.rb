@@ -1,5 +1,5 @@
 class Lexer
-  KEYWORDS = %w(def class if true false nil)
+  KEYWORDS = %w(def class if true false else nil)
 
   def tokenize(code)
     code.chomp! # Remove extra line breaks
@@ -68,8 +68,3 @@ class Lexer
     tokens
   end
 end
-
-puts code.inspect
-tokens = Lexer.new.tokenize(code)
-puts tokens.inspect
-# Returns an array of tokens (a token being a tuple of [TOKEN_TYPE, TOKEN_VALUE])
