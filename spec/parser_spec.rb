@@ -25,4 +25,24 @@ describe Parser do
     expect(parser.parse("a = 1")).to eq(Nodes.new([SetLocalNode.new("a", NumberNode.new(1))]))
     expect(parser.parse("A = 1")).to eq(Nodes.new([SetConstantNode.new("A", NumberNode.new(1))]))
   end
+
+  it "handles def with no arguments" do
+    code = <<-CODE
+      def method:
+        true
+    CODE
+    expect(parser.parse(code)).to eq(Nodes.new([
+      DefNode.new("method", [], Nodes.new([TrueNode.new]))
+    ]))
+  end
+
+  it "handles def with arguments" do
+    code = <<-CODE
+      def method(a, b):
+        true
+    CODE
+    expect(parser.parse(code)).to eq(Nodes.new([
+      DefNode.new("method", ["a", "b"], Nodes.new([TrueNode.new]))
+    ]))
+  end
 end
