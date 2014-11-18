@@ -33,4 +33,18 @@ describe "Runtime" do
   specify "a class is a class" do
     expect(Constants["Number"].runtime_class).to eq(Constants["Class"])
   end
+
+  specify "numbers can be added" do
+    x = Constants["Number"].new_with_value(2)
+    y = Constants["Number"].new_with_value(3)
+    result = x.call("+", [y])
+    expect(result.runtime_class).to eq(Constants["Number"])
+    expect(result.ruby_value).to eq(5)
+  end
+
+  specify "inheritance works" do
+    number = Constants["Number"].new_with_value(3)
+    result = number.call("inspect")
+    expect(result.runtime_class).to eq(Constants["Number"])
+  end
 end

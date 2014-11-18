@@ -1,14 +1,21 @@
 class AwesomeClass < AwesomeObject
   attr_reader :runtime_methods
 
-  def initialize
+  def initialize(super_class = nil)
     @runtime_methods = {}
     @runtime_class = Constants["Class"]
+    @runtime_superclass = super_class
   end
 
   def lookup(method_name)
     method = @runtime_methods[method_name]
-    raise "Method not found: #{method_name}" if method.nil?
+    unless method
+      if @runtime_superclass
+        return @runtime_superclass.lookup(method_name)
+      else
+        raise "Method not found: #{method_name}"
+      end
+    end
     method
   end
 
