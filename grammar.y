@@ -3,6 +3,7 @@ class Parser
 # We need to tell the parser what tokens to expect. So each type of token produced
 # by our lexer needs to be declared here.
 token IF
+token WHILE
 token DEF
 token CLASS
 token NEWLINE
@@ -83,6 +84,7 @@ rule
   | Def
   | Class
   | If
+  | While
   | '(' Expression ')'    { result = val[1] }
   ;
 
@@ -153,6 +155,7 @@ rule
   | Expression '-'  Expression  { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression '*'  Expression  { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression '/'  Expression  { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | '!' Expression              { result = CallNode.new(val[1], val[0], [])       }
   ;
 
   # Then we have rules for getting and setting values of constants and local variables.
@@ -202,6 +205,10 @@ rule
   # Class names are also constants because they start with a capital letter.
   Class:
     CLASS CONSTANT Block          { result = ClassNode.new(val[1], val[2]) }
+  ;
+
+  While:
+    WHILE Expression Block        { result = WhileNode.new(val[1], val[2]) }
   ;
 
   # Finally, `if` is similar to `class` but receives a *condition*.

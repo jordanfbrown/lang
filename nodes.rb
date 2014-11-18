@@ -85,4 +85,6 @@ class ClassNode < Struct.new(:name, :body); end
 # `if` control structures are stored in a node of their own. The `condition` and `body` will also
 # be nodes that need to be evaluated at some point.
 # Look at this node if you want to implement other control structures like `while`, `for`, `loop`, etc.
-class IfNode  < Struct.new(:condition, :body); end
+class IfNode < Struct.new(:condition, :body); end
+
+class WhileNode < Struct.new(:condition, :body); end

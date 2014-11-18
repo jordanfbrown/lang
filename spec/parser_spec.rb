@@ -36,6 +36,12 @@ describe Parser do
     ]))
   end
 
+  it "handles !" do
+    expect(parser.parse("!2")).to eq(Nodes.new([
+      CallNode.new(NumberNode.new(2), "!", [])
+    ]))
+  end
+
   it "handles def with arguments" do
     code = <<-CODE
       def method(a, b):
@@ -45,4 +51,16 @@ describe Parser do
       DefNode.new("method", ["a", "b"], Nodes.new([TrueNode.new]))
     ]))
   end
+
+  it "handles while" do
+    code = <<-CODE
+      while true:
+        true
+    CODE
+    expect(parser.parse(code)).to eq(Nodes.new([
+      WhileNode.new(TrueNode.new, Nodes.new([TrueNode.new]))
+    ]))
+  end
+
+
 end
