@@ -13,7 +13,7 @@ class AwesomeClass < AwesomeObject
       if @runtime_superclass
         return @runtime_superclass.lookup(method_name)
       else
-        raise "Method not found: #{method_name}"
+        raise "Method `#{method_name}` not found on class "
       end
     end
     method

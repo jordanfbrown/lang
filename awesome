@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby -I.
+#
+# Usage:
+#   ./awesome example.awm # eval a file
+#   ./awesome             # start the repl
+
+require "interpreter"
+require "readline"
+
+interpreter = Interpreter.new
+
+if file = ARGV.first
+  interpreter.eval(File.read(file))
+else
+  puts "Awesome REPL, Ctrl+C to quit"
+  loop do
+    begin
+      line = Readline::readline(">> ")
+      Readline::HISTORY.push(line)
+      value = interpreter.eval(line)
+      puts "=> #{value.ruby_value.inspect}"
+    rescue RuntimeError => e
+      puts e.inspect
+    end
+  end
+end
