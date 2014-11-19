@@ -1,12 +1,4 @@
-class Foo:
-  def add(a, b):
-    a + b
-
-  def subtract(a, b):
-    a - b
-
-foo = Foo.new
-added = foo.add(3,4)
-subtracted = foo.subtract(4,3)
-print(added)
-print(subtracted)
+test = 0
+while test < 10:
+  print(test / 2)
+  test = test + 1

@@ -29,7 +29,7 @@ Constants["Object"].def(:inspect) do |receiver, arguments|
   receiver
 end
 
-[:+, :-, :/, :*].each do |operation|
+[:+, :-, :/, :*, :>, :>=, :<, :<=, :==, :!=].each do |operation|
   Constants["Number"].def(operation) do |receiver, arguments|
     result = receiver.ruby_value.send(operation, arguments.first.ruby_value)
     Constants["Number"].new_with_value(result)
